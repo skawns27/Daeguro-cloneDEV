@@ -1,5 +1,8 @@
-## 배달앱[대구로]: 웹 개발 clone 프로젝트
-<img scr ="./daeguro.png"/>
+## 배달앱[대구로]: 웹 개발 Clone 프로젝트
+<img src ="./daeguro.png"
+  width="400"
+  height="400"
+ />
 
 # OverView 
   1. 아케텍처(추가예정)
@@ -14,6 +17,6 @@
     + PostgreSQL
     + Redis
     + Docker
-
 # LoadMap
-<img scr ="./loadMap.jpg"/>
+<img src ="./loadMap.jpg"/>
+
