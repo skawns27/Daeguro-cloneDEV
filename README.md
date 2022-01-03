@@ -1,5 +1,5 @@
 ## 배달앱[대구로]: 웹 개발 Clone 프로젝트
-<img src ="./daeguro.png"
+<img src ="Image/daeguro.png"
   width="400"
   height="400"
  />
@@ -18,7 +18,7 @@
     + Redis
     + Docker
 # LoadMap
-<img src ="./loadMap.jpg"/>
+<img src ="Image/loadMap.jpg"/>
 
 # DB(v0.0.1) 구조
 <img src ="/Backend/DB/ERD/논리명/PDF/대구로ERD001.png"/>
