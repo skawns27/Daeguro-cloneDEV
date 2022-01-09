@@ -21,4 +21,4 @@
 <img src ="Image/loadMap.jpg"/>
 
 # DB(v0.0.1) 구조
-<img src ="/Backend/DB/ERD/논리명/PDF/대구로ERD001.png"/>
+<img src ="/Backend/DB/ERD/논리명/PDF/대구로ERD002.png"/>
