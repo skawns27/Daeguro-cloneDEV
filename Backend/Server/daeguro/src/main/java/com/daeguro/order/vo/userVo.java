@@ -12,7 +12,6 @@ public class userVo {
     private char userGender;
     private String userAddr;
 
-    public order
     public userJoin(String userName,
                     String userEmail,
                     String userPw,
