@@ -1,7 +1,7 @@
 package com.daeguro.order.service;
 
 import com.daeguro.order.vo.orderVo;
-import com.daeguro.order.vo.userVo;
+import com.daeguro.common.vo.userVo;
 
 public class userOrderService implements orderService{
     @Override
