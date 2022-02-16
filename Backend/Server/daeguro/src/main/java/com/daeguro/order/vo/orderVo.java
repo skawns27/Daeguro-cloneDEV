@@ -1,20 +1,25 @@
 package com.daeguro.order.vo;
 
+import com.daeguro.common.vo.storeVo;
+
+import javax.persistence.GeneratedValue;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class orderVo {
+    @GeneratedValue()
     private long orderId;
     private long userId;
     private long storeId;
     private long sumPrice;
     private int totalPrice;
-    private Date orderDate;
+    private String orderDate;
     private String orderAddr;
     private String orderReq;
     private List<menuVo> orderMenu;
 
-
+    /*getter*/
     public long getOrderId() {
         return orderId;
     }
@@ -35,7 +40,7 @@ public class orderVo {
         return totalPrice;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
@@ -47,6 +52,7 @@ public class orderVo {
         return orderReq;
     }
 
+    /*setter*/
     public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
@@ -63,12 +69,15 @@ public class orderVo {
         this.sumPrice = sumPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPrice() {
+        this.totalPrice = 0;
     }
 
+    /*주문접수 시간*/
     public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+        Date nowTime = new Date();
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); //주문시간
+        this.orderDate = timeFormat.format(nowTime);
     }
 
     public void setOrderAddr(String orderAddr) {

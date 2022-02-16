@@ -1,11 +1,19 @@
 package com.daeguro.common.vo;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(schema = "userTB")
 public class userVo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId;
+
     private String userName;
+    @Column(unique = true, nullable = false)
     private String userEmail; //db테이블에 추가 필요
+
     private String userPw;  //db테이블에 추가 필요
     private String userTel;
     private Date userBirth;
