@@ -1,7 +1,5 @@
 package com.daeguro.order.vo;
 
-import com.daeguro.common.vo.storeVo;
-
 import javax.persistence.GeneratedValue;
 import java.text.SimpleDateFormat;
 import java.util.Date;

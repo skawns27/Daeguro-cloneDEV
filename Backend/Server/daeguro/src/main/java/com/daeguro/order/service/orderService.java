@@ -1,7 +1,7 @@
 package com.daeguro.order.service;
 
 import com.daeguro.order.vo.orderVo;
-import com.daeguro.common.vo.userVo;
+import com.daeguro.common.vo.UserVo;
 
 public interface orderService {
 
@@ -11,7 +11,7 @@ public interface orderService {
      * @param orderVo
      * @version 2022-02-14
      */
-    public int DlvrOrder(userVo user, orderVo order);
+    public int DlvrOrder(UserVo user, orderVo order);
 
     /**
      * 포장주문 서비스
@@ -19,5 +19,5 @@ public interface orderService {
      * @param orderVo
      * @version 2022-02-14
      */
-    public int PkgOrder(userVo user, orderVo order);
+    public int PkgOrder(UserVo user, orderVo order);
 }

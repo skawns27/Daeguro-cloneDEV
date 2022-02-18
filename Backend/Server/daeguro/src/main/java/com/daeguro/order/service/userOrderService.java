@@ -1,16 +1,16 @@
 package com.daeguro.order.service;
 
 import com.daeguro.order.vo.orderVo;
-import com.daeguro.common.vo.userVo;
+import com.daeguro.common.vo.UserVo;
 
 public class userOrderService implements orderService{
     @Override
-    public int DlvrOrder(userVo user, orderVo order) {
+    public int DlvrOrder(UserVo user, orderVo order) {
         return 0;
     }
 
     @Override
-    public int PkgOrder(userVo user, orderVo order) {
+    public int PkgOrder(UserVo user, orderVo order) {
         return 0;
     }
 }
