@@ -14,14 +14,6 @@ public class MysqlUserDao implements UserDao{
     public MysqlUserDao(EntityManager em) {
          this.em = em;
     }
-    /*내 정보 조회*/
-    @Override
-    public Optional<UserVo> findById(Long id) {
-         List<UserVo> result = em.createQuery(findByIdSQL, UserVo.class)
-                 .setParameter("userId", id)
-                 .getResultList();
-        return Optional.empty();
-    }
 
     /*로그인: DB 이메일 조회*/
     @Override

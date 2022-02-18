@@ -22,18 +22,18 @@ class CommonConfig {
     }
 
 
-    @Bean
+ /*   @Bean
     public UserService userService() {
         return new UserService(userDao());
-    }
+    }*/
 
-    @Bean
-    public UserDao userDao() {
-        return new MysqlUserDao(em);
-    }
+//    @Bean
+//    public UserDao userDao() {
+//        return new MysqlUserDao();
+//    }
 
-    @Bean
+   /* @Bean
     public StoreDao storeDao() {
         return new MyqslStoreDao(em);
-    }
+    }*/
 }

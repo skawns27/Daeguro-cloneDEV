@@ -1,11 +1,10 @@
 package com.daeguro.common.vo;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(schema = "userTB")
-public class userVo {
+public class UserVo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId;
@@ -16,9 +15,19 @@ public class userVo {
 
     private String userPw;  //db테이블에 추가 필요
     private String userTel;
-    private Date userBirth;
+    private String userBirth;
     private char userGender;
     private String userAddr;
+
+    public UserVo(String userName, String userEmail, String userPw, String userTel, String userBirth, char userGender, String userAddr) {
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPw = userPw;
+        this.userTel = userTel;
+        this.userBirth = userBirth;
+        this.userGender = userGender;
+        this.userAddr = userAddr;
+    }
 
     public void setUserId(long userId) {
         this.userId = userId;
@@ -40,7 +49,7 @@ public class userVo {
         this.userTel = userTel;
     }
 
-    public void setUserBirth(Date userBirth) {
+    public void setUserBirth(String userBirth) {
         this.userBirth = userBirth;
     }
 
@@ -64,7 +73,7 @@ public class userVo {
         return userTel;
     }
 
-    public Date getUserBirth() {
+    public String getUserBirth() {
         return userBirth;
     }
 

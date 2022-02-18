@@ -22,9 +22,9 @@ public class UserService {
         return newUser.getUserId();
     }
 
-    public long userAcc02(String userEm, String userPw) {
+    /*public long userAcc02(String userEm, String userPw) {
 
-    }
+    }*/
 
     private void checkDupUser(UserVo checkUser) {
         userDao.findByEm(checkUser.getUserEmail())
