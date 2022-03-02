@@ -1,14 +1,9 @@
 package com.daeguro.common;
 
-import com.daeguro.common.dao.MysqlUserDao;
-import com.daeguro.common.dao.StoreDao;
-import com.daeguro.common.dao.UserDao;
-import com.daeguro.common.service.UserService;
+import com.daeguro.common.controller.dao.StoreDao;
+import com.daeguro.common.controller.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.persistence.EntityManager;
 
 @Configuration
 class CommonConfig {
