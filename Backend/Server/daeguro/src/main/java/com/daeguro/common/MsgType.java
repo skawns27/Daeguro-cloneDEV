@@ -7,6 +7,7 @@ public class MsgType {
     public String dupUser;
     public String wrongPw;
     public String unValidReq;
+    public String noUserData;
 
     public MsgType() {
         this.OK = "결과처리 완료";
@@ -14,6 +15,7 @@ public class MsgType {
         this.dupUser = "중복사용자 신청";
         this.wrongPw = "잘못된 비밀번호";
         this.unValidReq = "허용되지 않은 요청";
+        this.noUserData = "없는 사용자 정보";
     }
 
 }

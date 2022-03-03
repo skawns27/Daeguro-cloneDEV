@@ -11,6 +11,7 @@ public class MysqlUserDao implements UserDao{
     private final String findByEmSQL = "SELECT * FROM userTB WHERE userEm = :email";
     private final String findByIdSQL = "SELECT * FROM userTB WHERE userId = :id";
 
+    /*DataSource Injection*/
     public MysqlUserDao(EntityManager em) {
          this.em = em;
     }

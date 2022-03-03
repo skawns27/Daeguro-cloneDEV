@@ -6,6 +6,7 @@ public class CodeType {
     public char dupUser;
     public char wrongPw;
     public char unValidReq;
+    public char noUserData;
 
     public CodeType() {
         this.OK = '0';
@@ -13,5 +14,6 @@ public class CodeType {
         this.dupUser = '2';
         this.wrongPw = '3';
         this.unValidReq = '4';
+        this.noUserData = '5';
     }
 }

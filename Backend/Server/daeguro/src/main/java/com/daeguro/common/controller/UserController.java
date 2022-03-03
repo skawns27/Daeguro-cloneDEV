@@ -22,10 +22,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    /*사용자 회원가입 요청 req*/
+    /*사용자 회원가입 요청*/
     @PostMapping("users/new")
-    public UserAccRes01 regUser(@RequestBody UserAccReq01 userAccReq01) { // UserAccReq01 => 회원가입 요청 포멧
-        UserAccRes01 res = new UserAccRes01();
+    public UserAccRes01 regUser(@RequestBody UserAccReq01 userAccReq01) {
+
         UserVo userVo = new UserVo(userAccReq01.getUserName(),
                                     userAccReq01.getUserEmail(),
                                     userAccReq01.getUserPw(),
@@ -33,13 +33,12 @@ public class UserController {
                                     userAccReq01.getUserBirth(),
                                     userAccReq01.getUserGender(),
                                     userAccReq01.getUserAddr());
-        return userService.userAcc01(userVo); // =>회원가입 서비스 결과 return
+        return userService.userAcc01(userVo); // =>회원가입 서비스 결과(resCode, resMsg) 리턴
     }
-
+    /*사용자 로그인 요청*/
     @PostMapping("users/login")
-    public long loginUser(@RequestBody UserAccReq02 userAccReq02) {
+    public UserAccRes02 loginUser(@RequestBody UserAccReq02 userAccReq02) {
 
-//        return userService.userAcc02(userAccReq02.getUserEmail(), userAccReq02.getUserPw());
-        return 0;
+        return userService.userAcc02(userAccReq02.getUserEmail(), userAccReq02.getUserPw());
     }
 }
