@@ -1,7 +1,12 @@
 package com.daeguro.common.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(schema = "storeTB")
 public class storeVo {
@@ -29,131 +34,4 @@ public class storeVo {
         this.storeId = storeId;// DB
     }
 
-    public long getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(long storeId) {
-        this.storeId = storeId;
-    }
-
-    public long getCatId() {
-        return catId;
-    }
-
-    public void setCatId(long catId) {
-        this.catId = catId;
-    }
-
-    public long getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(long brandId) {
-        this.brandId = brandId;
-    }
-
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
-    }
-
-    public String getStoreAddr() {
-        return storeAddr;
-    }
-
-    public void setStoreAddr(String storeAddr) {
-        this.storeAddr = storeAddr;
-    }
-
-    public String getMop() {
-        return mop;
-    }
-
-    public void setMop(String mop) {
-        this.mop = mop;
-    }
-
-    public String getCeoCmnt() {
-        return ceoCmnt;
-    }
-
-    public void setCeoCmnt(String ceoCmnt) {
-        this.ceoCmnt = ceoCmnt;
-    }
-
-    public String getStoreRegDate() {
-        return storeRegDate;
-    }
-
-    public void setStoreRegDate(String storeRegDate) {
-        this.storeRegDate = storeRegDate;
-    }
-
-    public String getStoreTel() {
-        return storeTel;
-    }
-
-    public void setStoreTel(String storeTel) {
-        this.storeTel = storeTel;
-    }
-
-    public String getStoreBn() {
-        return storeBn;
-    }
-
-    public void setStoreBn(String storeBn) {
-        this.storeBn = storeBn;
-    }
-
-    public String getOed() {
-        return oed;
-    }
-
-    public void setOed(String oed) {
-        this.oed = oed;
-    }
-
-    public String getDlvrMin() {
-        return dlvrMin;
-    }
-
-    public void setDlvrMin(String dlvrMin) {
-        this.dlvrMin = dlvrMin;
-    }
-
-    public String getDlvrFree() {
-        return dlvrFree;
-    }
-
-    public void setDlvrFree(String dlvrFree) {
-        this.dlvrFree = dlvrFree;
-    }
-
-    public int getDlvrTip() {
-        return dlvrTip;
-    }
-
-    public void setDlvrTip(int dlvrTip) {
-        this.dlvrTip = dlvrTip;
-    }
-
-    public String getDlvrLt() {
-        return dlvrLt;
-    }
-
-    public void setDlvrLt(String dlvrLt) {
-        this.dlvrLt = dlvrLt;
-    }
-
-    public String getToLt() {
-        return toLt;
-    }
-
-    public void setToLt(String toLt) {
-        this.toLt = toLt;
-    }
 }

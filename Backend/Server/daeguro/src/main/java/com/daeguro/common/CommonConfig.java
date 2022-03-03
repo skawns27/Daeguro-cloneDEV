@@ -2,7 +2,9 @@ package com.daeguro.common;
 
 import com.daeguro.common.controller.dao.StoreDao;
 import com.daeguro.common.controller.dao.UserDao;
+import com.daeguro.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -16,11 +18,10 @@ class CommonConfig {
         this.userDao = userDao;
     }
 
-
- /*   @Bean
+    @Bean
     public UserService userService() {
-        return new UserService(userDao());
-    }*/
+        return new UserService(userDao);
+    }
 
 //    @Bean
 //    public UserDao userDao() {

@@ -1,7 +1,12 @@
 package com.daeguro.common.vo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(schema = "userTB")
 public class UserVo {
@@ -19,7 +24,14 @@ public class UserVo {
     private char userGender;
     private String userAddr;
 
-    public UserVo(String userName, String userEmail, String userPw, String userTel, String userBirth, char userGender, String userAddr) {
+    public UserVo( String userName,
+                   String userEmail,
+                   String userPw,
+                   String userTel,
+                   String userBirth,
+                   char userGender,
+                   String userAddr ) {
+
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPw = userPw;
@@ -27,65 +39,5 @@ public class UserVo {
         this.userBirth = userBirth;
         this.userGender = userGender;
         this.userAddr = userAddr;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
-    public void setUserPw(String userPw) {
-        this.userPw = userPw;
-    }
-
-    public void setUserTel(String userTel) {
-        this.userTel = userTel;
-    }
-
-    public void setUserBirth(String userBirth) {
-        this.userBirth = userBirth;
-    }
-
-    public void setUserGender(char userGender) {
-        this.userGender = userGender;
-    }
-
-    public void setUserAddr(String userAddr) {
-        this.userAddr = userAddr;
-    }
-
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public String getUserPw() {
-        return userPw;
-    }
-
-    public String getUserTel() {
-        return userTel;
-    }
-
-    public String getUserBirth() {
-        return userBirth;
-    }
-
-    public char getUserGender() {
-        return userGender;
-    }
-
-    public String getUserAddr() {
-        return userAddr;
-    }
-
-    public long getUserId() {
-        return userId;
     }
 }

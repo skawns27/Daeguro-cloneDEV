@@ -1,16 +1,12 @@
 package com.daeguro.common.controller;
 
-import com.daeguro.common.controller.userAcc.UserAccReq01;
-import com.daeguro.common.controller.userAcc.UserAccReq02;
-import com.daeguro.common.controller.userAcc.UserAccRes01;
-import com.daeguro.common.controller.userAcc.UserAccRes02;
+import com.daeguro.common.controller.userAcc.*;
 import com.daeguro.common.service.UserService;
 import com.daeguro.common.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
@@ -41,4 +37,12 @@ public class UserController {
 
         return userService.userAcc02(userAccReq02.getUserEmail(), userAccReq02.getUserPw());
     }
+
+    /*사용자 로그아웃 TODO*/
+//    @PostMapping("user/logout")
+//    public UserAccRes03 logoutUser(@RequestBody UserAccReq03 userAccReq03) {
+//
+//        return userService.userAcc03(userAccReq03.getUserId());
+//    }
+
 }

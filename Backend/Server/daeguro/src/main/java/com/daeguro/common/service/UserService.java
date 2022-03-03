@@ -54,10 +54,16 @@ public class UserService {
             res.resCode = codeType.wrongPw;
             res.resMsg = msgType.wrongPw;
         } else {
-
+            /*로그인 인증수단 추가 예정*/
+            res.resCode = codeType.OK;
+            res.resMsg = msgType.OK;
+            res.userId = findUser.get().getUserId();
+            res.userName = findUser.get().getUserName();
+            res.userAddr = findUser.get().getUserAddr();
         }
         return res;
     }
+
 
     private void checkDupUser(UserVo checkUser) {
         userDao.findByEm(checkUser.getUserEmail())
