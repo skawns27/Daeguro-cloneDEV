@@ -1,11 +1,11 @@
-package com.daeguro.common.service;
+package com.daeguro.client.service;
 
-import com.daeguro.common.CodeType;
-import com.daeguro.common.MsgType;
-import com.daeguro.common.controller.dao.UserDao;
-import com.daeguro.common.controller.userAcc.UserAccRes01;
-import com.daeguro.common.controller.userAcc.UserAccRes02;
-import com.daeguro.common.vo.UserVo;
+import com.daeguro.lib.CodeType;
+import com.daeguro.lib.MsgType;
+import com.daeguro.client.controller.dao.UserDao;
+import com.daeguro.client.controller.userAcc.UserAccRes01;
+import com.daeguro.client.controller.userAcc.UserAccRes02;
+import com.daeguro.client.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
@@ -14,8 +14,6 @@ import java.util.Optional;
 
 public class UserService {
     private UserDao userDao;
-    private MsgType msgType = new MsgType();
-    private CodeType codeType = new CodeType();
 
     @Autowired
     public UserService(UserDao userDao) {
@@ -28,16 +26,16 @@ public class UserService {
         try {
             checkDupUser(newUser);
             userDao.save(newUser);
-            res.resCode = codeType.OK;
-            res.resMsg = msgType.OK;
+            res.resCode = CodeType.OK;
+            res.resMsg = MsgType.OK;
         } catch(IllegalStateException e) {
             /*중복사용자 요청*/
-            res.resCode = codeType.dupUser;
-            res.resMsg = msgType.dupUser;
+            res.resCode = CodeType.dupUser;
+            res.resMsg = MsgType.dupUser;
         } catch(Exception e) { // 기타오류 => 상황에 따라서 확장 생성예정
             /*기타오류 -> db or network error*/
-            res.resCode = codeType.unKnownErr;
-            res.resMsg = msgType.unKnownErr;
+            res.resCode = CodeType.unKnownErr;
+            res.resMsg = MsgType.unKnownErr;
         } finally {
             return res;
         }
@@ -48,15 +46,15 @@ public class UserService {
         Optional<UserVo> findUser = userDao.findByEm(userEmail).stream().findAny();
 
         if(findUser.isEmpty()) {
-            res.resCode = codeType.noUserData;
-            res.resMsg = msgType.noUserData;
+            res.resCode = CodeType.noUserData;
+            res.resMsg = MsgType.noUserData;
         } else if(userPw != findUser.get().getUserPw()) {
-            res.resCode = codeType.wrongPw;
-            res.resMsg = msgType.wrongPw;
+            res.resCode = CodeType.wrongPw;
+            res.resMsg = MsgType.wrongPw;
         } else {
             /*로그인 인증수단 추가 예정*/
-            res.resCode = codeType.OK;
-            res.resMsg = msgType.OK;
+            res.resCode = CodeType.OK;
+            res.resMsg = MsgType.OK;
             res.userId = findUser.get().getUserId();
             res.userName = findUser.get().getUserName();
             res.userAddr = findUser.get().getUserAddr();

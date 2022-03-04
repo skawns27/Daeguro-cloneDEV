@@ -1,8 +1,8 @@
-package com.daeguro.common.controller;
+package com.daeguro.client.controller;
 
-import com.daeguro.common.controller.userAcc.*;
-import com.daeguro.common.service.UserService;
-import com.daeguro.common.vo.UserVo;
+import com.daeguro.client.controller.userAcc.*;
+import com.daeguro.client.service.UserService;
+import com.daeguro.client.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

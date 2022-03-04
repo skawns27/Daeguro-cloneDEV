@@ -1,4 +1,4 @@
-package com.daeguro.common.controller.dao;
+package com.daeguro.client.controller.dao;
 
 import javax.persistence.EntityManager;
 

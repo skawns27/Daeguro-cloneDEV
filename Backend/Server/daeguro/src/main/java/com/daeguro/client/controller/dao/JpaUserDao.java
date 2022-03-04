@@ -1,6 +1,6 @@
-package com.daeguro.common.controller.dao;
+package com.daeguro.client.controller.dao;
 
-import com.daeguro.common.vo.UserVo;
+import com.daeguro.client.vo.UserVo;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

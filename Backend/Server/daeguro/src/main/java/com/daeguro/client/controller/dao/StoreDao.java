@@ -1,6 +1,6 @@
-package com.daeguro.common.controller.dao;
+package com.daeguro.client.controller.dao;
 
-import com.daeguro.common.vo.storeVo;
+import com.daeguro.client.vo.storeVo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoreDao extends JpaRepository<storeVo, Integer> {

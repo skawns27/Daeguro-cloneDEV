@@ -1,8 +1,8 @@
-package com.daeguro.common;
+package com.daeguro.client;
 
-import com.daeguro.common.controller.dao.StoreDao;
-import com.daeguro.common.controller.dao.UserDao;
-import com.daeguro.common.service.UserService;
+import com.daeguro.client.controller.dao.StoreDao;
+import com.daeguro.client.controller.dao.UserDao;
+import com.daeguro.client.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
