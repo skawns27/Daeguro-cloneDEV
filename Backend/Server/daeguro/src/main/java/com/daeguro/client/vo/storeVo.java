@@ -1,9 +1,11 @@
 package com.daeguro.client.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(schema = "storeTB")
 public class storeVo {

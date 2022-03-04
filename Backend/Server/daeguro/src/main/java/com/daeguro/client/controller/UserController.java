@@ -3,13 +3,18 @@ package com.daeguro.client.controller;
 import com.daeguro.client.controller.userAcc.*;
 import com.daeguro.client.service.UserService;
 import com.daeguro.client.vo.UserVo;
+import com.daeguro.lib.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
+
+import static com.daeguro.lib.SessionConst.LOGINED;
+import static com.daeguro.lib.SessionConst.NOT_LOGINED;
 
 @Controller
 public class UserController {
@@ -38,25 +43,34 @@ public class UserController {
     @PostMapping("users/login")
     public UserAccRes02 loginUser(@RequestBody UserAccReq02 userAccReq02,
                                   HttpServletRequest req) {
+
         UserAccRes02 res = userService
                             .userAcc02(userAccReq02.getUserEmail(),
                                         userAccReq02.getUserPw());
-        Optional<UserVo> loginUser = res.getUser();
+
+        Optional<Long> loginUser = res.getUserId();
 
         if (loginUser.isEmpty()) {
+            return res;
             /*결과값 전달*/
         }
-            /*세션생성*/
-//            HttpSession session = req.getSession();
-//            session.setAttribute(SessionConst.LOGIN_USER, userVo)
+        /*세션생성 -> 사용자 COOKIE에 세션ID 첨부까지*/
+        HttpSession session = req.getSession();
+        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
         return res;
     }
 
     /*사용자 로그아웃 TODO*/
-//    @PostMapping("user/logout")
-//    public UserAccRes03 logoutUser(@RequestBody UserAccReq03 userAccReq03) {
-//
-//        return userService.userAcc03(userAccReq03.getUserId());
-//    }
+    @PostMapping("user/logout")
+    public UserAccRes03 logoutUser(@RequestBody UserAccReq03 userAccReq03,
+                                   HttpServletRequest req) {
+        char loginState = NOT_LOGINED;
+        HttpSession session = req.getSession();
+        if (session != null) {
+            loginState = LOGINED;
+            session.invalidate();
+        }
+        return userService.userAcc03(loginState);
+    }
 
 }

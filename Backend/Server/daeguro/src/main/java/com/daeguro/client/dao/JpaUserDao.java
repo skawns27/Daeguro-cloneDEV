@@ -1,4 +1,4 @@
-package com.daeguro.client.controller.dao;
+package com.daeguro.client.dao;
 
 import com.daeguro.client.vo.UserVo;
 import org.springframework.data.domain.Example;
@@ -19,7 +19,7 @@ public interface JpaUserDao extends JpaRepository<UserDao, Long>, UserDao {
     Optional<UserVo> findByEm(String email);
 
     @Override
-    long save(UserVo userVo);
+    Long save(UserVo userVo);
 
     @Override
     List<UserDao> findAll();

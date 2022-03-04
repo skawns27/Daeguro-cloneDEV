@@ -1,4 +1,4 @@
-package com.daeguro.client.controller.dao;
+package com.daeguro.client.dao;
 
 import com.daeguro.client.vo.storeVo;
 import org.springframework.data.jpa.repository.JpaRepository;

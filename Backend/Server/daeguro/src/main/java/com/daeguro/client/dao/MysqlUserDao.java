@@ -1,4 +1,4 @@
-package com.daeguro.client.controller.dao;
+package com.daeguro.client.dao;
 
 import com.daeguro.client.vo.UserVo;
 
@@ -26,7 +26,7 @@ public class MysqlUserDao implements UserDao{
     }
     /*회원가입*/
     @Override
-    public long save(UserVo userVo) {
+    public Long save(UserVo userVo) {
         em.persist(userVo);
         return userVo.getUserId();
     }
