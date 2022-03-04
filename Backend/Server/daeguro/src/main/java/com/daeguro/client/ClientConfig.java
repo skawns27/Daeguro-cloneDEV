@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-class CommonConfig {
+class ClientConfig {
     private UserDao userDao;
     private StoreDao storeDao;
 
 
     @Autowired
-    public CommonConfig(UserDao userDao) {
+    public ClientConfig(UserDao userDao) {
         this.userDao = userDao;
     }
 

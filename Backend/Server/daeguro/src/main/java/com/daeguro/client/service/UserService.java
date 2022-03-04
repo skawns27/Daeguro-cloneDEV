@@ -53,11 +53,9 @@ public class UserService {
             res.resMsg = MsgType.wrongPw;
         } else {
             /*로그인 인증수단 추가 예정*/
-            res.resCode = CodeType.OK;
-            res.resMsg = MsgType.OK;
-            res.userId = findUser.get().getUserId();
-            res.userName = findUser.get().getUserName();
-            res.userAddr = findUser.get().getUserAddr();
+            res.setResCode(CodeType.OK);
+            res.setResMsg(MsgType.OK);
+            res.setUser(findUser.get());
         }
         return res;
     }

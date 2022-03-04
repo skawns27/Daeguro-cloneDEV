@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
+
 @Controller
 public class UserController {
     private final UserService userService;
@@ -33,9 +36,20 @@ public class UserController {
     }
     /*사용자 로그인 요청*/
     @PostMapping("users/login")
-    public UserAccRes02 loginUser(@RequestBody UserAccReq02 userAccReq02) {
+    public UserAccRes02 loginUser(@RequestBody UserAccReq02 userAccReq02,
+                                  HttpServletRequest req) {
+        UserAccRes02 res = userService
+                            .userAcc02(userAccReq02.getUserEmail(),
+                                        userAccReq02.getUserPw());
+        Optional<UserVo> loginUser = res.getUser();
 
-        return userService.userAcc02(userAccReq02.getUserEmail(), userAccReq02.getUserPw());
+        if (loginUser.isEmpty()) {
+            /*결과값 전달*/
+        }
+            /*세션생성*/
+//            HttpSession session = req.getSession();
+//            session.setAttribute(SessionConst.LOGIN_USER, userVo)
+        return res;
     }
 
     /*사용자 로그아웃 TODO*/
