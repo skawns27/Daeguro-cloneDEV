@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class ClientConfig {
-    private UserDao userDao;
+    private final UserDao userDao;
     private StoreDao storeDao;
 
 

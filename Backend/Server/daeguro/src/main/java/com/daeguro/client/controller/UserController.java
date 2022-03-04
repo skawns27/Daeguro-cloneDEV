@@ -6,8 +6,7 @@ import com.daeguro.client.vo.UserVo;
 import com.daeguro.lib.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,17 +59,30 @@ public class UserController {
         return res;
     }
 
-    /*사용자 로그아웃 TODO*/
+    /*사용자 로그아웃*/
     @PostMapping("user/logout")
     public UserAccRes03 logoutUser(@RequestBody UserAccReq03 userAccReq03,
                                    HttpServletRequest req) {
-        char loginState = NOT_LOGINED;
+        char userState = NOT_LOGINED;
         HttpSession session = req.getSession();
         if (session != null) {
-            loginState = LOGINED;
+            userState = LOGINED;
             session.invalidate();
         }
-        return userService.userAcc03(loginState);
+        return userService.userAcc03(userState);
     }
+    /*사용자정보 조회*/
+    @GetMapping("user/my/{userId}")
+    public UserAccRes04 findUser(@PathVariable String userId,
+                                 HttpServletRequest req) {
+        char userState = NOT_LOGINED;
+        HttpSession session = req.getSession();
+        if (session != null) {
+            /*접근허용 사용자*/
+            userState = LOGINED;
+        }
+        return userService.userAcc04(userState, Long.parseLong(userId));
+    }
+    /*사용자정보 수정*/
 
 }
