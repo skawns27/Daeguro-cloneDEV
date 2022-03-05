@@ -2,7 +2,6 @@ package com.daeguro.client.service;
 
 import com.daeguro.client.controller.userAcc.UserAccRes03;
 import com.daeguro.client.controller.userAcc.UserAccRes04;
-import com.daeguro.client.dao.JpaUserDao;
 import com.daeguro.lib.CodeType;
 import com.daeguro.lib.MsgType;
 import com.daeguro.client.dao.UserDao;
@@ -83,6 +82,7 @@ public class UserService {
             res.setResMsg(MsgType.OK);
             res.getUser(userDao.findById(userId));
         }
+        return res;
     }
     private void checkDupUser(UserVo checkUser) {
         userDao.findByEm(checkUser.getUserEmail())
