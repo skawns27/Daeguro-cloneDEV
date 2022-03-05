@@ -13,7 +13,7 @@ class ClientConfig {
     private StoreDao storeDao;
 
 
-    @Autowired
+
     public ClientConfig(UserDao userDao) {
         this.userDao = userDao;
     }

@@ -10,5 +10,9 @@ import java.util.Optional;
 public class UserAccRes04 {
     private char resCode;
     private String resMsg;
-    private Optional<UserVo> user;
+    private UserVo user;
+
+    public void getUser(Optional<UserVo> user) {
+        this.user = user.get();
+    }
 }
