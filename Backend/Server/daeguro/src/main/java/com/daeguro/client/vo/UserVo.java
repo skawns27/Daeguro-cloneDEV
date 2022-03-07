@@ -39,4 +39,5 @@ public class UserVo {
         this.userGender = userGender;
         this.userAddr = userAddr;
     }
+
 }

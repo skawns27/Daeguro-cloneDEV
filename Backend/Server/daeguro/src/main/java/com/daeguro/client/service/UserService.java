@@ -1,13 +1,9 @@
 package com.daeguro.client.service;
 
-import com.daeguro.client.controller.userAcc.UserAccRes03;
-import com.daeguro.client.controller.userAcc.UserAccRes04;
-import com.daeguro.client.dao.JpaUserDao;
+import com.daeguro.client.controller.userAcc.*;
 import com.daeguro.lib.CodeType;
 import com.daeguro.lib.MsgType;
 import com.daeguro.client.dao.UserDao;
-import com.daeguro.client.controller.userAcc.UserAccRes01;
-import com.daeguro.client.controller.userAcc.UserAccRes02;
 import com.daeguro.client.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,6 +24,7 @@ public class UserService {
     @Transactional
     public UserAccRes01 userAcc01(UserVo newUser) {
         UserAccRes01 res = new UserAccRes01();
+
         try {
             checkDupUser(newUser);
             res.setResCode(CodeType.OK);
@@ -66,6 +63,7 @@ public class UserService {
     
     public UserAccRes03 userAcc03(char loginState) {
         UserAccRes03 res = new UserAccRes03();
+
         if (loginState == LOGINED) {
             res.setResCode(CodeType.OK);
             res.setResMsg(MsgType.OK);
@@ -75,14 +73,33 @@ public class UserService {
         res.setResMsg(MsgType.unValidReq);
         return res;
     }
-
+    /*사용자 정보 조회
+    * @param */
     public UserAccRes04 userAcc04(char userState, Long userId) {
         UserAccRes04 res = new UserAccRes04();
+
         if (userState == LOGINED) {
             res.setResCode(CodeType.OK);
             res.setResMsg(MsgType.OK);
-            res.getUser(userDao.findById(userId));
+            res.setUser(userDao.findById(userId));
         }
+        return res;
+    }
+    /*사용자 정보 수정*/
+    public UserAccRes05 userAcc05(char userState, UserVo updateUserData) {
+        UserAccRes05 res = new UserAccRes05();
+
+        if (userState == LOGINED) {
+            try {
+                userDao.updateBtId(updateUserData);
+                res.
+                res.setResCode();
+
+            } catch(Exception e) {
+
+            }
+        }
+        return res;
     }
     private void checkDupUser(UserVo checkUser) {
         userDao.findByEm(checkUser.getUserEmail())

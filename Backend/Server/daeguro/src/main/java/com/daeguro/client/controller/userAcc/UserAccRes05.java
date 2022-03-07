@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import java.util.Optional;
 
-@Getter @Setter
-public class UserAccRes04 {
+@Getter
+@Setter
+public class UserAccRes05 {
     private char resCode;
     private String resMsg;
-    private Optional<UserVo> user;
-
+    private Long userId;
 }

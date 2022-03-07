@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class UserController {
             return res;
             /*결과값 전달*/
         }
-        /*세션생성 -> 사용자 COOKIE에 세션ID 첨부까지*/
+        /*세션생성 -> 사용자 COOKIE 에 세션ID 첨부까지*/
         HttpSession session = req.getSession();
         session.setAttribute(SessionConst.LOGIN_USER, loginUser);
         return res;
@@ -84,5 +85,22 @@ public class UserController {
         return userService.userAcc04(userState, Long.parseLong(userId));
     }
     /*사용자정보 수정*/
+    @ResponseBody
+    @PostMapping("user/my/{userId}/update")
+    public UserAccRes05 updateUser(@PathVariable String userId,
+                                   @RequestBody UserVo updateUserData,
+                                   HttpServletRequest req,
+                                   HttpServletResponse res) {
+        char userState = NOT_LOGINED;
+        HttpSession session = req.getSession();
+        if (session != null) {
+            /*접근허용 사용자*/
+            userState = LOGINED;
+            session.invalidate();
+            req.getSession();
+
+        }
+        return userAcc05(userId, userState, updateUserData);
+    }
 
 }
