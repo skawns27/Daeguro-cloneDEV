@@ -11,5 +11,4 @@ public class UserAccRes04 {
     private char resCode;
     private String resMsg;
     private Optional<UserVo> user;
-
 }

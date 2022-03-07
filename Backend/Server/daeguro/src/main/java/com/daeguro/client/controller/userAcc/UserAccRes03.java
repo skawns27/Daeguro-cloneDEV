@@ -7,5 +7,4 @@ import lombok.Setter;
 public class UserAccRes03 {
     private char resCode;
     private String resMsg;
-
 }

@@ -5,7 +5,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class UserAccReq01 {
-    private long userId;
     private String userName;
     private String userEmail; //db테이블에 추가 필요
     private String userPw;  //db테이블에 추가 필요

@@ -23,10 +23,6 @@ class ClientConfig {
         return new UserService(userDao);
     }
 
-//    @Bean
-//    public UserDao userDao() {
-//        return new MysqlUserDao();
-//    }
 
    /* @Bean
     public StoreDao storeDao() {

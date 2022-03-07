@@ -18,7 +18,13 @@ public interface JpaUserDao extends JpaRepository<UserVo, Long>, UserDao {
     Optional<UserVo> findByEm(String email);
 
     @Override
-    Long save(UserVo userVo);
+    @Query(MySQLMapping.INSERT_DATA)
+    Long save(@Param(value = "userName") String userName,
+              @Param(value = "userEmail") String userEmail,
+              @Param(value = "userTel") String userTel,
+              @Param(value = "userBirth") String userBirth,
+              @Param(value = "userName") char userGender,
+              @Param(value = "userAddr") String userAddr);
 
     @Override
     List<UserVo> findAll();
@@ -28,11 +34,10 @@ public interface JpaUserDao extends JpaRepository<UserVo, Long>, UserDao {
 
     @Modifying
     @Query(MySQLMapping.UPDATE_USER)
-    Long update (@Param(value = "userId") Long userId,
+    Long updateProfile (@Param(value = "userId") Long userId,
                  @Param(value = "userName") String userName,
-                 @Param(value = "userPw") String userPw,
                  @Param(value = "userTel") String userTel,
                  @Param(value = "userBirth") String userBirth,
-                 @Param(value = "userGender") String userGender,
+                 @Param(value = "userGender") char userGender,
                  @Param(value = "userAddr") String userAddr);
 }

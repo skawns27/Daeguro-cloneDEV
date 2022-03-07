@@ -10,5 +10,5 @@ public class UserAccRes01 {
 
     private char resCode;
     private String resMsg;
-    private Optional<Long> userId;
+    private Long userId;
 }

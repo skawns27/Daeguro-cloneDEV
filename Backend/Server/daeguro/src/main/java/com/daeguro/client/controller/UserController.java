@@ -3,6 +3,7 @@ package com.daeguro.client.controller;
 import com.daeguro.client.controller.userAcc.*;
 import com.daeguro.client.service.UserService;
 import com.daeguro.client.vo.UserVo;
+import com.daeguro.lib.CodeType;
 import com.daeguro.lib.SessionConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,7 +66,7 @@ public class UserController {
     public UserAccRes03 logoutUser(@RequestBody UserAccReq03 userAccReq03,
                                    HttpServletRequest req) {
         char userState = NOT_LOGINED;
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
         if (session != null) {
             userState = LOGINED;
             session.invalidate();
@@ -77,30 +78,38 @@ public class UserController {
     public UserAccRes04 findUser(@PathVariable String userId,
                                  HttpServletRequest req) {
         char userState = NOT_LOGINED;
-        HttpSession session = req.getSession();
+        HttpSession session = req.getSession(false);
         if (session != null) {
             /*접근허용 사용자*/
             userState = LOGINED;
         }
         return userService.userAcc04(userState, Long.parseLong(userId));
     }
-    /*사용자정보 수정*/
+    /*사용자정보 프로필정보 수정*/
     @ResponseBody
     @PostMapping("user/my/{userId}/update")
     public UserAccRes05 updateUser(@PathVariable String userId,
-                                   @RequestBody UserVo updateUserData,
-                                   HttpServletRequest req,
-                                   HttpServletResponse res) {
+                                   @RequestBody UserAccReq05 updateUserData,
+                                   HttpServletRequest req) {
+
         char userState = NOT_LOGINED;
-        HttpSession session = req.getSession();
+        UserAccRes05 res;
+        HttpSession session = req.getSession(false);
+
         if (session != null) {
             /*접근허용 사용자*/
             userState = LOGINED;
+        }
+
+        res = userService.userAcc05(Long.parseLong(userId), userState, updateUserData);
+
+        if(res.getResCode() == CodeType.OK) {
+            /*세션 초기화*/
             session.invalidate();
             req.getSession();
-
         }
-        return userAcc05(userId, userState, updateUserData);
+
+        return res;
     }
 
 }

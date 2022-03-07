@@ -1,6 +1,9 @@
 package com.daeguro.client.service;
 
+
 import com.daeguro.client.controller.userAcc.*;
+
+import com.daeguro.client.protocol.UserAccProto;
 import com.daeguro.lib.CodeType;
 import com.daeguro.lib.MsgType;
 import com.daeguro.client.dao.UserDao;
@@ -18,18 +21,24 @@ public class UserService {
 
     @Autowired
     public UserService(UserDao userDao) {
+
         this.userDao = userDao;
     }
 
     @Transactional
     public UserAccRes01 userAcc01(UserVo newUser) {
         UserAccRes01 res = new UserAccRes01();
-
         try {
             checkDupUser(newUser);
+            res.setUserId(userDao.save(newUser.getUserName(),
+                    newUser.getUserEmail(),
+                    newUser.getUserTel(),
+                    newUser.getUserBirth(),
+                    newUser.getUserGender(),
+                    newUser.getUserAddr())); //반환 id
+
             res.setResCode(CodeType.OK);
             res.setResMsg(MsgType.OK);
-            res.setUserId(Optional.ofNullable(userDao.save(newUser))); //반환 id
         } catch(IllegalStateException e) {
             /*중복사용자 요청*/
             res.setResCode(CodeType.dupUser);
@@ -86,17 +95,25 @@ public class UserService {
         return res;
     }
     /*사용자 정보 수정*/
-    public UserAccRes05 userAcc05(char userState, UserVo updateUserData) {
+    @Transactional
+    public UserAccRes05 userAcc05(Long userId, char userState, UserAccReq05 updateUserData) {
         UserAccRes05 res = new UserAccRes05();
 
         if (userState == LOGINED) {
             try {
-                userDao.updateBtId(updateUserData);
-                res.
-                res.setResCode();
+                userDao.updateProfile( userId,
+                                        updateUserData.getUserName(),
+                                        updateUserData.getUserTel(),
+                                        updateUserData.getUserBirth(),
+                                        updateUserData.getUserGender(),
+                                        updateUserData.getUserAddr() );
+
+                res.setResCode(CodeType.OK);
+                res.setResMsg(MsgType.OK);
 
             } catch(Exception e) {
-
+                res.setResCode(CodeType.unKnownErr);
+                res.setResMsg(MsgType.unKnownErr);
             }
         }
         return res;
