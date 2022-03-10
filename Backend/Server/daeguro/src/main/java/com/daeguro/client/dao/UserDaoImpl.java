@@ -19,7 +19,7 @@ public interface UserDaoImpl extends JpaRepository<UserVo, Long>, UserDao {
     Optional<UserVo> findByUserEm(String userEm);
 
    /* @Override
-    @Query(value = MySQLMapping.INSERT_DATA, nativeQuery = true)
+    @Query(value = MySQLMapping.INSERT_DATA, nativeQuery = true) =>DDL은 Modify 추가
     Void save(@Param(value = "userName") String userName,
               @Param(value = "userEm") String userEm,
               @Param(value = "userPw") String userPw,
