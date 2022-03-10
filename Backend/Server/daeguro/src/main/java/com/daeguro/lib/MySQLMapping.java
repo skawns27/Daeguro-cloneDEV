@@ -7,27 +7,9 @@ public interface MySQLMapping {
                         "u.userBirth" +
                         "u.userGender" +
                         "u.Addr" +
-                    " WHERE u.userId = :id";
+                    " WHERE u.userId = :userId";
 
-    String INSERT_DATA = "INSERT INTO userTB" +
-                                "(userName, " +
-                                "userEmail, " +
-                                "userPw, " +
-                                "userTel, " +
-                                "userTel, " +
-                                "userBirth, " +
-                                "userGender, " +
-                                "userAddr) " +
-                            "VALUES" +
-                                "(:userName, " +
-                                ":userEmail, " +
-                                ":userPw, " +
-                                ":userTel, " +
-                                ":userTel, " +
-                                ":userBirth, " +
-                                ":userGender, " +
-                                ":userAddr) " +
-                        "SELECT LAST_INSERT_ID()";
+    String INSERT_DATA = "INSERT INTO userTB(userName, userEm, userPw, userTel, userBirth, userGender, userAddr) VALUES(:userName, :userEm, :userPw, :userTel, :userBirth, :userGender, :userAddr)";
 
             /*private String userName;
     private String userEmail; //db테이블에 추가 필요

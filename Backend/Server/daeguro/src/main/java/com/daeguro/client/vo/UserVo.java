@@ -1,26 +1,33 @@
 package com.daeguro.client.vo;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.Getter;
-import lombok.Setter;
 import javax.persistence.*;
 
-@Getter
-@Setter
-@Entity
-@Table(schema = "userTB")
+@Data
+@Entity()
+@Table(name = "userTB")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserVo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="userid")
     private Long userId;
-
+    @Column(name ="username")
     private String userName;
-    @Column(unique = true, nullable = false)
-    private String userEmail; //db테이블에 추가 필요
-
+    @Column(name ="userem",unique = true, nullable = false)
+    private String userEm; //db테이블에 추가 필요
+    @Column(name ="userpw")
     private String userPw;  //db테이블에 추가 필요
+    @Column(name ="usertel")
     private String userTel;
+    @Column(name ="userbirth")
     private String userBirth;
+    @Column(name ="usergender")
     private char userGender;
+    @Column(name ="useraddr")
     private String userAddr;
 
     public UserVo( String userName,
@@ -32,7 +39,7 @@ public class UserVo {
                    String userAddr ) {
 
         this.userName = userName;
-        this.userEmail = userEmail;
+        this.userEm = userEmail;
         this.userPw = userPw;
         this.userTel = userTel;
         this.userBirth = userBirth;

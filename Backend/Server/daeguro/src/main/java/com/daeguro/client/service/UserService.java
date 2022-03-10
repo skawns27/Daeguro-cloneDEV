@@ -8,6 +8,7 @@ import com.daeguro.lib.CodeType;
 import com.daeguro.lib.MsgType;
 import com.daeguro.client.dao.UserDao;
 import com.daeguro.client.vo.UserVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 import static com.daeguro.lib.SessionConst.LOGINED;
 
-
+@Slf4j
 public class UserService {
     private final UserDao userDao;
 
@@ -30,12 +31,10 @@ public class UserService {
         UserAccRes01 res = new UserAccRes01();
         try {
             checkDupUser(newUser);
-            res.setUserId(userDao.save(newUser.getUserName(),
-                    newUser.getUserEmail(),
-                    newUser.getUserTel(),
-                    newUser.getUserBirth(),
-                    newUser.getUserGender(),
-                    newUser.getUserAddr())); //반환 id
+
+            userDao.save(newUser);
+
+            res.setUserId(userDao.save(newUser).getUserId()); //반환 id
 
             res.setResCode(CodeType.OK);
             res.setResMsg(MsgType.OK);
@@ -47,11 +46,12 @@ public class UserService {
             /*기타오류 -> db or network error*/
             res.setResCode(CodeType.unKnownErr);
             res.setResMsg(MsgType.unKnownErr);
+            log.trace("DB Exception = {}", e);
         }
         return res;
     }
 
-    public UserAccRes02 userAcc02(String userEmail, String userPw) {
+    /*public UserAccRes02 userAcc02(String userEmail, String userPw) {
         UserAccRes02 res = new UserAccRes02();
         Optional<UserVo> findUser = userDao.findByEm(userEmail).stream().findAny();
 
@@ -62,7 +62,7 @@ public class UserService {
             res.resCode = CodeType.wrongPw;
             res.resMsg = MsgType.wrongPw;
         } else {
-            /*로그인 인증수단 추가 예정*/
+            *//*로그인 인증수단 추가 예정*//*
             res.setResCode(CodeType.OK);
             res.setResMsg(MsgType.OK);
             res.setUserId(Optional.ofNullable(findUser.get().getUserId()));
@@ -82,8 +82,8 @@ public class UserService {
         res.setResMsg(MsgType.unValidReq);
         return res;
     }
-    /*사용자 정보 조회
-    * @param */
+    *//*사용자 정보 조회
+    * @param *//*
     public UserAccRes04 userAcc04(char userState, Long userId) {
         UserAccRes04 res = new UserAccRes04();
 
@@ -94,20 +94,20 @@ public class UserService {
         }
         return res;
     }
-    /*사용자 정보 수정*/
+    *//*사용자 정보 수정*//*
     @Transactional
     public UserAccRes05 userAcc05(Long userId, char userState, UserAccReq05 updateUserData) {
         UserAccRes05 res = new UserAccRes05();
 
         if (userState == LOGINED) {
             try {
-                userDao.updateProfile( userId,
+                *//*userDao.updateProfile( userId,
                                         updateUserData.getUserName(),
                                         updateUserData.getUserTel(),
                                         updateUserData.getUserBirth(),
                                         updateUserData.getUserGender(),
                                         updateUserData.getUserAddr() );
-
+*//*
                 res.setResCode(CodeType.OK);
                 res.setResMsg(MsgType.OK);
 
@@ -117,9 +117,9 @@ public class UserService {
             }
         }
         return res;
-    }
+    }*/
     private void checkDupUser(UserVo checkUser) {
-        userDao.findByEm(checkUser.getUserEmail())
+        userDao.findByUserEm(checkUser.getUserEm())
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원정보");
                 });
