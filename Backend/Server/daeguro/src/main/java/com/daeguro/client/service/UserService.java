@@ -76,19 +76,29 @@ public class UserService {
     }
     /*사용자 정보 조회
     * @param */
-    public UserAccRes04 userAcc04(char userState, Long userId) {
+    public UserAccRes04 userAcc04(Long userId, Long sessionUserId) {
         UserAccRes04 res = new UserAccRes04();
 
-        if (userState == LOGINED) {
-            res.setResCode(CodeType.OK);
-            res.setResMsg(MsgType.OK);
-            res.setUser(userDao.findById(userId));
+        if (userId != sessionUserId) {
+            res.setResCode(CodeType.unValidReq);
+            res.setResMsg(MsgType.unValidReq);
+            return res;
         }
+        res.setResCode(CodeType.OK);
+        res.setResMsg(MsgType.OK);
+        res.setUser(userDao.findById(userId));
+
         return res;
     }
     /*사용자 정보 수정*/
-    public UserAccRes05 userAcc05(Long userId, UserAccReq05 updateUserData) {
+    public UserAccRes05 userAcc05(Long userId, Long sessionUserId, UserAccReq05 updateUserData) {
         UserAccRes05 res = new UserAccRes05();
+
+        if (userId != sessionUserId) {
+            res.setResCode(CodeType.unValidReq);
+            res.setResMsg(MsgType.unValidReq);
+            return res;
+        }
 
         try {
             userDao.updateProfile( userId,
@@ -101,13 +111,13 @@ public class UserService {
             res.setUserId(userId);
             res.setResCode(CodeType.OK);
             res.setResMsg(MsgType.OK);
+
             } catch(Exception e) {
                 res.setResCode(CodeType.unKnownErr);
                 res.setResMsg(MsgType.unKnownErr);
             }
         return res;
     }
-
     /*중복 사용자 검증*/
     private void checkDupUser(UserVo checkUser) {
         userDao.findByUserEm(checkUser.getUserEm())
@@ -115,5 +125,4 @@ public class UserService {
                     throw new IllegalStateException("이미 존재하는 회원정보");
                 });
     }
-
 }

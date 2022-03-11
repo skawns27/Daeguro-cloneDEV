@@ -60,7 +60,7 @@ public class userServiceTest {
     @Test
     @Transactional
     @Rollback
-    void 로그인() {
+    void 로그인_정보_업데이트() {
         String pw = "4321";
         UserVo newUser = new UserVo(
                 null,
@@ -81,28 +81,21 @@ public class userServiceTest {
         loginReq1.setUserEmail("skawns28@naver.com");
         loginReq1.setUserPw("1234");
         UserAccRes02 loginRes = userService.userAcc02(loginReq1.getUserEmail(), loginReq1.getUserPw());
-        assertThat(res.getResCode()).isEqualTo(loginRes.getResCode());
+        assertThat(loginRes.getResCode()).isEqualTo(CodeType.noUserData);
 
         /*틀린 비밀번호*/
         UserAccReq02 loginReq2 = new UserAccReq02();
         loginReq2.setUserEmail("skawns27@naver.com");
         loginReq2.setUserPw("1234");
         loginRes = userService.userAcc02(loginReq2.getUserEmail(), loginReq2.getUserPw());
-        assertThat(res.getResCode()).isEqualTo(loginRes.getResCode());
+        assertThat(loginRes.getResCode()).isEqualTo(CodeType.wrongPw);
 
         /*초기 로그인*/
         UserAccReq02 loginReq3 = new UserAccReq02();
         loginReq3.setUserEmail("skawns27@naver.com");
         loginReq3.setUserPw("4321");
         loginRes = userService.userAcc02(loginReq3.getUserEmail(), loginReq3.getUserPw());
-        assertThat(res.getResCode()).isEqualTo(loginRes.getResCode());
-
-        /*중복 로그인*/
-        UserAccReq02 loginReq4 = new UserAccReq02();
-        loginReq4.setUserEmail("skawns27@naver.com");
-        loginReq4.setUserPw("4321");
-        loginRes = userService.userAcc02(loginReq4.getUserEmail(), loginReq4.getUserPw());
-        assertThat(res.getResCode()).isEqualTo(loginRes.getResCode());
+        assertThat(loginRes.getResCode()).isEqualTo(CodeType.OK);
     }
  /*   @Test
     void 회원기능_점검() {
