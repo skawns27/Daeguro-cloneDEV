@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Optional;
 
 import static com.daeguro.lib.SessionConst.LOGINED;
@@ -29,6 +30,7 @@ public class UserController {
 
     /*사용자 회원가입 요청*/
     @PostMapping("users/new")
+    @ResponseBody
     public UserAccRes01 regUser(@RequestBody UserAccReq01 userAccReq01) {
 
         UserVo userVo = new UserVo();
@@ -39,13 +41,18 @@ public class UserController {
         userVo.setUserBirth(userAccReq01.getUserBirth());
         userVo.setUserGender(userAccReq01.getUserGender());
         userVo.setUserAddr(userAccReq01.getUserAddr());
+
         return userService.userAcc01(userVo); // =>회원가입 서비스 결과(resCode, resMsg) 리턴
     }
     /*사용자 로그인 요청*/
-   /* @PostMapping("users/login")
+    @PostMapping("users/login")
+    @ResponseBody
     public UserAccRes02 loginUser(@RequestBody UserAccReq02 userAccReq02,
-                                  HttpServletRequest req) {
-
+                                  @RequestParam(defaultValue = "users/") String redirectURL,
+                                  HttpServletRequest httpReq,
+                                  HttpServletResponse httpRes) {
+        /*세션유무 확인*/
+        /*사용자 정보 조회*/
         UserAccRes02 res = userService
                             .userAcc02(userAccReq02.getUserEmail(),
                                         userAccReq02.getUserPw());
@@ -54,63 +61,83 @@ public class UserController {
 
         if (loginUser.isEmpty()) {
             return res;
-            *//*결과값 전달*//*
         }
-        *//*세션생성 -> 사용자 COOKIE 에 세션ID 첨부까지*//*
-        HttpSession session = req.getSession();
+        /*세션생성 -> 사용자 COOKIE 에 세션ID 첨부까지*/
+        HttpSession session = httpReq.getSession();
         session.setAttribute(SessionConst.LOGIN_USER, loginUser);
         return res;
     }
 
-    *//*사용자 로그아웃*//*
+    /*사용자 로그아웃*/
     @PostMapping("user/logout")
+    @ResponseBody
     public UserAccRes03 logoutUser(@RequestBody UserAccReq03 userAccReq03,
-                                   HttpServletRequest req) {
-        char userState = NOT_LOGINED;
-        HttpSession session = req.getSession(false);
-        if (session != null) {
-            userState = LOGINED;
+                                   HttpServletRequest httpReq,
+                                   HttpServletResponse httpRes) {
+
+        HttpSession session = httpReq.getSession(false);
+
+        if (session.getAttribute(SessionConst.LOGIN_USER) != null) {
             session.invalidate();
         }
-        return userService.userAcc03(userState);
+
+        try {
+            httpRes.sendRedirect("/");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+       return userService.userAcc03();
     }
-    *//*사용자정보 조회*//*
+    /*사용자정보 조회*/
     @GetMapping("user/my/{userId}")
+    @ResponseBody
     public UserAccRes04 findUser(@PathVariable String userId,
-                                 HttpServletRequest req) {
+                                 HttpServletRequest httpReq,
+                                 HttpServletResponse httpRes) {
+
         char userState = NOT_LOGINED;
-        HttpSession session = req.getSession(false);
+        HttpSession session = httpReq.getSession(false);
+
         if (session != null) {
-            *//*접근허용 사용자*//*
+            /*접근허용 사용자*/
             userState = LOGINED;
         }
+
+        try {
+            httpRes.sendRedirect("user/my");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return userService.userAcc04(userState, Long.parseLong(userId));
     }
-    *//*사용자정보 프로필정보 수정*//*
+    /*사용자정보 프로필정보 수정*/
     @ResponseBody
     @PostMapping("user/my/{userId}/update")
     public UserAccRes05 updateUser(@PathVariable String userId,
                                    @RequestBody UserAccReq05 updateUserData,
-                                   HttpServletRequest req) {
+                                   HttpServletRequest httpReq,
+                                   HttpServletResponse httpRes) {
 
-        char userState = NOT_LOGINED;
         UserAccRes05 res;
-        HttpSession session = req.getSession(false);
+        HttpSession session = httpReq.getSession(false);
 
-        if (session != null) {
-            *//*접근허용 사용자*//*
-            userState = LOGINED;
-        }
-
-        res = userService.userAcc05(Long.parseLong(userId), userState, updateUserData);
+        res = userService.userAcc05(Long.parseLong(userId), updateUserData);
 
         if(res.getResCode() == CodeType.OK) {
-            *//*세션 초기화*//*
+            /*세션 초기화*/
             session.invalidate();
-            req.getSession();
+            httpReq.getSession();
+        }
+
+        try {
+            httpRes.sendRedirect("user/my");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return res;
-    }*/
+    }
 
 }

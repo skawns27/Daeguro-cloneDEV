@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserVo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="userid")
@@ -29,22 +30,5 @@ public class UserVo {
     private char userGender;
     @Column(name ="useraddr")
     private String userAddr;
-
-    public UserVo( String userName,
-                   String userEmail,
-                   String userPw,
-                   String userTel,
-                   String userBirth,
-                   char userGender,
-                   String userAddr ) {
-
-        this.userName = userName;
-        this.userEm = userEmail;
-        this.userPw = userPw;
-        this.userTel = userTel;
-        this.userBirth = userBirth;
-        this.userGender = userGender;
-        this.userAddr = userAddr;
-    }
 
 }

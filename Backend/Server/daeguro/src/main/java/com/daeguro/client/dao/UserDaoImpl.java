@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.daeguro.lib.MySQLMapping;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,7 @@ public interface UserDaoImpl extends JpaRepository<UserVo, Long>, UserDao {
     /*JpaRepository 확장 클래스의 구현체를 생성하여 injection*/
 
     @Override
-    Optional<UserVo> findByUserEm(String userEm);
+    Optional<UserVo> findByUserEm(String userEm); // findBy(탐색조건이름)으로 함수 정의해야함
 
    /* @Override
     @Query(value = MySQLMapping.INSERT_DATA, nativeQuery = true) =>DDL은 Modify 추가
@@ -30,18 +31,21 @@ public interface UserDaoImpl extends JpaRepository<UserVo, Long>, UserDao {
 
     @Override
     <S extends UserVo> S save(S entity);
-/*    @Override
+    @Override
     List<UserVo> findAll();
 
     @Override
     Optional<UserVo> findById(Long aLong);
 
+
+    @Transactional
     @Modifying
-    @Query(MySQLMapping.UPDATE_USER)
-    Long updateProfile (@Param(value = "userId") Long userId,
-                 @Param(value = "userName") String userName,
-                 @Param(value = "userTel") String userTel,
-                 @Param(value = "userBirth") String userBirth,
-                 @Param(value = "userGender") char userGender,
-                 @Param(value = "userAddr") String userAddr);*/
+    @Query(value = MySQLMapping.UPDATE_USER, nativeQuery = true)
+    Void updateProfile (
+                @Param("userId") Long userId,
+                @Param("userName") String userName,
+                @Param("userTel") String userTel,
+                @Param("userBirth") String userBirth,
+                @Param("userGender") char userGender,
+                @Param("userAddr") String userAddr);
 }
