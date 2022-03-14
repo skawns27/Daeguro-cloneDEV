@@ -26,7 +26,7 @@ public class WebConfig {
     public FilterRegistrationBean loginCheckFiler() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new LoginCheckFilter());
-        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.setOrder(2);
         filterRegistrationBean.addUrlPatterns("/*");
 
         return filterRegistrationBean;

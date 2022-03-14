@@ -1,8 +1,7 @@
 package com.daeguro.client.dao;
 
+import com.daeguro.client.controller.userAcc.UserAccRes04;
 import com.daeguro.client.vo.UserVo;
-import org.hibernate.annotations.SQLInsert;
-
 import java.util.Optional;
 
 public interface UserDao {

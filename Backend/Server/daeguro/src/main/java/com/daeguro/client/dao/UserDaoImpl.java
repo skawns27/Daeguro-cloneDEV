@@ -1,5 +1,6 @@
 package com.daeguro.client.dao;
 
+import com.daeguro.client.controller.userAcc.UserAccRes04;
 import com.daeguro.client.vo.UserVo;
 import org.hibernate.annotations.SQLInsert;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,16 +20,6 @@ public interface UserDaoImpl extends JpaRepository<UserVo, Long>, UserDao {
     @Override
     Optional<UserVo> findByUserEm(String userEm); // findBy(탐색조건이름)으로 함수 정의해야함
 
-   /* @Override
-    @Query(value = MySQLMapping.INSERT_DATA, nativeQuery = true) =>DDL은 Modify 추가
-    Void save(@Param(value = "userName") String userName,
-              @Param(value = "userEm") String userEm,
-              @Param(value = "userPw") String userPw,
-              @Param(value = "userTel") String userTel,
-              @Param(value = "userBirth") String userBirth,
-              @Param(value = "userGender") char userGender,
-              @Param(value = "userAddr") String userAddr);*/
-
     @Override
     <S extends UserVo> S save(S entity);
     @Override
@@ -38,8 +29,8 @@ public interface UserDaoImpl extends JpaRepository<UserVo, Long>, UserDao {
     Optional<UserVo> findById(Long aLong);
 
 
-    @Transactional
     @Modifying
+    @Transactional
     @Query(value = MySQLMapping.UPDATE_USER, nativeQuery = true)
     Void updateProfile (
                 @Param("userId") Long userId,

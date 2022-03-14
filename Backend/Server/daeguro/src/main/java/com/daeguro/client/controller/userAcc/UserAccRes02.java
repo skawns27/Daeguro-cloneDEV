@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Getter @Setter
 public class UserAccRes02 {
-    public char resCode;
-    public String resMsg;
-    private Optional<Long> userId;
+    private char resCode;
+    private String resMsg;
+    private Long userId;
 
 }

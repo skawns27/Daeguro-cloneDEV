@@ -1,6 +1,7 @@
 package com.daeguro.lib;
 
 public interface MySQLMapping {
+    String FIND_BY_ID = "SELECT userName, userEm, userTel, userBirth, userGender FROM userTB WHERE userId = :userId";
     String UPDATE_USER = "UPDATE userTB " +
                                 "SET userName = :userName, " +
                                     "userTel = :userTel, " +

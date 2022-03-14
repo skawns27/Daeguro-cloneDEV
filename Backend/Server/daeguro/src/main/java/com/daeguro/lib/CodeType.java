@@ -7,4 +7,5 @@ package com.daeguro.lib;
      char wrongPw = '3';
      char unValidReq = '4';
      char noUserData = '5';
+     char DupLogin = '6';
  }

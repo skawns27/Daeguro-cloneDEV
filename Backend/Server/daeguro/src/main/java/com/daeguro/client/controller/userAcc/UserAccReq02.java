@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class UserAccReq02 {
-    private String userEmail;
+    private String userEm;
     private String userPw;
 }

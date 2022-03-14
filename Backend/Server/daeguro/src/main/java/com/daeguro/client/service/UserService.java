@@ -7,11 +7,11 @@ import com.daeguro.lib.CodeType;
 import com.daeguro.lib.MsgType;
 import com.daeguro.client.dao.UserDao;
 import com.daeguro.client.vo.UserVo;
+import com.daeguro.lib.SessionConst;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.transaction.Transactional;
 import java.util.Optional;
-import static com.daeguro.lib.SessionConst.LOGINED;
 
 @Slf4j
 public class UserService {
@@ -23,7 +23,6 @@ public class UserService {
         this.userDao = userDao;
     }
     /*회원가입*/
-    @Transactional
     public UserAccRes01 userAcc01(UserVo newUser) {
         UserAccRes01 res = new UserAccRes01();
         try {
@@ -43,27 +42,37 @@ public class UserService {
             /*기타오류 -> db or network error*/
             res.setResCode(CodeType.unKnownErr);
             res.setResMsg(MsgType.unKnownErr);
-            log.trace("DB Exception = {}", e);
+            log.debug("DB Exception = {}", e);
         }
         return res;
     }
 
-    public UserAccRes02 userAcc02(String userEmail, String userPw) {
+    public UserAccRes02 userAcc02(String userEmail, String userPw, String loginState) {
         UserAccRes02 res = new UserAccRes02();
         Optional<UserVo> findUser = userDao.findByUserEm(userEmail).stream().findAny();
         /*중복 로그인 세션 검증 절차 추가예정*/
+        log.info("사용자 로그인 상태:{}", loginState);
         if(findUser.isEmpty()) { //없는 사용자 정보
-            res.resCode = CodeType.noUserData;
-            res.resMsg = MsgType.noUserData;
+            res.setResCode(CodeType.noUserData);
+            res.setResMsg(MsgType.noUserData);
         } else if(!userPw.equals(findUser.get().getUserPw())) { //틀린 비밀번호
-            res.resCode = CodeType.wrongPw;
-            res.resMsg = MsgType.wrongPw;
+            res.setResCode(CodeType.wrongPw);
+            res.setResMsg(MsgType.wrongPw);
         } else {
             /*로그인 인증수단 추가 예정*/
-            res.setResCode(CodeType.OK);
-            res.setResMsg(MsgType.OK);
-            res.setUserId(Optional.ofNullable(findUser.get().getUserId()));
+            switch(loginState) {
+                case SessionConst.NORMAL_LOGIN: {
+                    res.setResCode(CodeType.OK);
+                    res.setResMsg(MsgType.OK);
+                } break;
+                case SessionConst.DUP_LOGIN: {
+                    res.setResCode(CodeType.DupLogin);
+                    res.setResMsg(MsgType.DupLogin);
+                }
+            }
+            res.setUserId(findUser.get().getUserId());
         }
+        log.info("로그인 결과값 ={}",res);
         return res;
     }
     
@@ -74,19 +83,14 @@ public class UserService {
         res.setResMsg(MsgType.unValidReq);
         return res;
     }
-    /*사용자 정보 조회
-    * @param */
-    public UserAccRes04 userAcc04(Long userId, Long sessionUserId) {
+    /*사용자 정보 조회*/
+    public UserAccRes04 userAcc04(Long sessionUserId) {
         UserAccRes04 res = new UserAccRes04();
 
-        if (userId != sessionUserId) {
-            res.setResCode(CodeType.unValidReq);
-            res.setResMsg(MsgType.unValidReq);
-            return res;
-        }
+
         res.setResCode(CodeType.OK);
         res.setResMsg(MsgType.OK);
-        res.setUser(userDao.findById(userId));
+        res.setUser(userDao.findById(sessionUserId));
 
         return res;
     }
