@@ -22,12 +22,13 @@ import javax.transaction.Transactional;
 public class UserServiceTest {
     @Autowired UserService userService;
 //    MessageDigest md = MessageDigest.getInstance("SHA-512");
+    /*20220517: DB연결 에러 발견 및 워크벤치 업데이트 후 해결*/
 
     @Test
     @Transactional
     @Rollback
     void 회원가입() {
-    /*정상가입*/
+    /*정상가입 */
 
         String pw = "";
         UserVo newUser = new UserVo(
