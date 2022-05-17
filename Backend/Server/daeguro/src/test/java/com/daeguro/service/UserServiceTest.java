@@ -8,6 +8,7 @@ import com.daeguro.client.vo.UserVo;
 import com.daeguro.lib.CodeType;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.daeguro.lib.MsgType;
 import com.daeguro.lib.SessionConst;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,33 +62,26 @@ public class UserServiceTest {
         assertThat(res2.getResCode()).isEqualTo(CodeType.dupUser);
     }
 
-    /*로그인*/
     @Test
     @Transactional
     @Rollback
     void 로그인_정보_업데이트() {
-        String pw = "4321";
-        UserVo newUser = new UserVo(
-                null,
-                "남준섭",
-                "skawns27@naver.com",
-                pw,
-                "01033147959",
-                "1997-04-23",
-                'M',
-                "대구광역시 수성구 신매로51 229동 509호" );
+        UserVo loginUser = new UserVo();
+        loginUser.setUserEm("skawns27@naver.com");
+        loginUser.setUserPw("1234");
 
-        UserAccRes01 res = userService.userAcc01(newUser);
-        assertThat(res.getResCode()).isEqualTo(CodeType.OK);
-        assertThat(res.getUserId()).isEqualTo(newUser.getUserId());
+        UserAccRes02 res = userService.userAcc02("skawns27@naver.com", "1234", "");
+        assertThat(res.getResMsg()).isEqualTo(MsgType.OK); //결과코드 확인
+        assertThat(res.getUserId()).isEqualTo(loginUser.getUserId()); //결과 사용자 ID 확인
 
-        /*미등록 로그인*/
-       /* UserAccReq02 loginReq1 = new UserAccReq02();
-        loginReq1.setUserEmail("skawns28@naver.com");
+
+       /* *//*미등록 로그인*//*
+        UserAccReq02 loginReq1 = new UserAccReq02();
+        loginReq1.setUserEm("skawns28@naver.com");
         loginReq1.setUserPw("1234");
-        UserAccRes02 loginRes = userService.userAcc02(loginReq1.getUserEmail(), loginReq1.getUserPw(), );
-        assertThat(loginRes.getResCode()).isEqualTo(CodeType.noUserData);
-*/
+        UserAccRes02 loginRes = userService.userAcc02(loginReq1.getUserEm(), loginReq1.getUserPw(), "04");
+        assertThat(loginRes.getResCode()).isEqualTo(CodeType.noUserData);*/
+
         /*틀린 비밀번호*/
         /*UserAccReq02 loginReq2 = new UserAccReq02();
         loginReq2.setUserEmail("skawns27@naver.com");

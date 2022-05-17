@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Slf4j
 public class LoginCheckFilter implements Filter {
-
+    /*모든 접근 가능 페이지: 메인, 회원가입, 로그인*/
     private static final String[] whiteList = {"/", "/users/new", "/user/login", "/css/*"};
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -22,7 +22,7 @@ public class LoginCheckFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpReponse = (HttpServletResponse) response;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         String requestURI = httpRequest.getRequestURI();
         try {
             log.info("인증 체크 필터 시작{}", requestURI);
@@ -34,7 +34,7 @@ public class LoginCheckFilter implements Filter {
                 if(session == null || session.getAttribute(SessionConst.LOGIN_USER) == null) {
 
                     log.info("미인증 사용자 요청 {}", requestURI);
-                    httpReponse.sendRedirect("/login?/redirectURL=" + requestURI);
+                    httpResponse.sendRedirect("/login?/redirectURL=" + requestURI);
                     return;
                 }
             }

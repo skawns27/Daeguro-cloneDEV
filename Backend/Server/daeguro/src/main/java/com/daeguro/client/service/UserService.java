@@ -47,6 +47,16 @@ public class UserService {
         return res;
     }
 
+    /** @brief 로그인 함수
+
+     *  @date 2022-05-18
+
+     *  @return
+
+     *  @param userEmail:사용자 이메일
+     *  @param userPw:사용자 비밀번호
+     *  @param loginState: 사용자 로그인 요청 상태 ( 00: 비활성화 상태, 01: 중복 로그인 요청 상태)
+     */
     public UserAccRes02 userAcc02(String userEmail, String userPw, String loginState) {
         UserAccRes02 res = new UserAccRes02();
         Optional<UserVo> findUser = userDao.findByUserEm(userEmail).stream().findAny();
@@ -68,7 +78,7 @@ public class UserService {
                 case SessionConst.DUP_LOGIN: {
                     res.setResCode(CodeType.DupLogin);
                     res.setResMsg(MsgType.DupLogin);
-                }
+                } break;
             }
             res.setUserId(findUser.get().getUserId());
         }
@@ -81,6 +91,7 @@ public class UserService {
 
         res.setResCode(CodeType.unValidReq);
         res.setResMsg(MsgType.unValidReq);
+
         return res;
     }
     /*사용자 정보 조회*/
@@ -101,9 +112,10 @@ public class UserService {
         if (userId != sessionUserId) {
             res.setResCode(CodeType.unValidReq);
             res.setResMsg(MsgType.unValidReq);
+
             return res;
         }
-
+        /*정보 수정(시작)*/
         try {
             userDao.updateProfile( userId,
                     updateUserData.getUserName(),

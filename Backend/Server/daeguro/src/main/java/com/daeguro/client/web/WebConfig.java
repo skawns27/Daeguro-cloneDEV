@@ -15,7 +15,7 @@ public class WebConfig {
     public FilterRegistrationBean logFiler() {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new LogFilter());
-        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.setOrder(1); // 필터 호출 순서
         filterRegistrationBean.addUrlPatterns("/*");
 
         return filterRegistrationBean;
