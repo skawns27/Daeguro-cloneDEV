@@ -1,6 +1,6 @@
-package com.daeguro.client.protocol;
+package com.daeguro.user.protocol;
 
-import com.daeguro.client.vo.UserVo;
+import com.daeguro.user.vo.UserVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -72,7 +72,7 @@ public class UserAccProto {
     public class UserAccRes04 {
         private char resCode;
         private String resMsg;
-        private Optional<UserVo> user;
+        private Optional<UserVO> user;
     }
 
     @Getter @Setter

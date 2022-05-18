@@ -1,6 +1,6 @@
 package com.daeguro.service;
 
-import com.daeguro.client.service.UserService;
+import com.daeguro.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

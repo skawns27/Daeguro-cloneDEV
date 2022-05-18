@@ -1,4 +1,4 @@
-package com.daeguro.client.vo;
+package com.daeguro.user.vo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(schema = "storeTB")
-public class storeVo {
+public class storeVO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long storeId;
@@ -29,7 +29,7 @@ public class storeVo {
     private String toLt; /**/
 
     /*2022-02-16: 가게 조회 기능 */
-    public storeVo(long storeId) {
+    public storeVO(long storeId) {
         this.storeId = storeId;// DB
     }
 

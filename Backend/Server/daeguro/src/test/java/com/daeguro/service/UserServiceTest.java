@@ -1,27 +1,27 @@
 package com.daeguro.service;
 
-import com.daeguro.client.controller.userAcc.UserAccReq02;
-import com.daeguro.client.controller.userAcc.UserAccRes01;
-import com.daeguro.client.controller.userAcc.UserAccRes02;
-import com.daeguro.client.service.UserService;
-import com.daeguro.client.vo.UserVo;
+import com.daeguro.user.controller.userAcc.UserAccReq02;
+import com.daeguro.user.controller.userAcc.UserAccRes01;
+import com.daeguro.user.controller.userAcc.UserAccRes02;
+import com.daeguro.user.service.UserService;
+import com.daeguro.user.vo.UserVO;
 import com.daeguro.lib.CodeType;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.daeguro.lib.MsgType;
-import com.daeguro.lib.SessionConst;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.annotation.Rollback;
+
 import javax.transaction.Transactional;
 
 
 @SpringBootTest
 public class UserServiceTest {
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
 //    MessageDigest md = MessageDigest.getInstance("SHA-512");
     /*20220517: DB연결 에러 발견 및 워크벤치 업데이트 후 해결*/
 
@@ -29,10 +29,10 @@ public class UserServiceTest {
     @Transactional
     @Rollback
     void 회원가입() {
-    /*정상가입 */
+        /*정상가입 */
 
         String pw = "";
-        UserVo newUser = new UserVo(
+        UserVO newUser = new UserVO(
                 null,
                 "남준섭",
                 "skawns27@naver.com",
@@ -40,15 +40,15 @@ public class UserServiceTest {
                 "01033147959",
                 "1997-04-23",
                 'M',
-                "대구광역시 수성구 신매로51 229동 509호" );
+                "대구광역시 수성구 신매로51 229동 509호");
 
         UserAccRes01 res = userService.userAcc01(newUser);
         assertThat(res.getResCode()).isEqualTo(CodeType.OK);
         assertThat(res.getUserId()).isEqualTo(newUser.getUserId());
 
-    /*중복회원가입*/
+        /*중복회원가입*/
 
-        UserVo newUser2 = new UserVo(
+        UserVO newUser2 = new UserVO(
                 null,
                 "남준섭",
                 "skawns27@naver.com",
@@ -56,7 +56,7 @@ public class UserServiceTest {
                 "01033147959",
                 "1997-04-23",
                 'M',
-                "대구광역시 수성구 신매로51 229동 509호" );
+                "대구광역시 수성구 신매로51 229동 509호");
 
         UserAccRes01 res2 = userService.userAcc01(newUser);
         assertThat(res2.getResCode()).isEqualTo(CodeType.dupUser);
@@ -66,16 +66,17 @@ public class UserServiceTest {
     @Transactional
     @Rollback
     void 로그인_정보_업데이트() {
-        UserVo loginUser = new UserVo();
+        UserVO loginUser = new UserVO();
         loginUser.setUserEm("skawns27@naver.com");
         loginUser.setUserPw("1234");
 
-        UserAccRes02 res = userService.userAcc02("skawns27@naver.com", "1234", "");
+        /*로그인*/
+        UserAccRes02 res = userService.userAcc02("skawns27@naver.com", "1234", "00");
         assertThat(res.getResMsg()).isEqualTo(MsgType.OK); //결과코드 확인
         assertThat(res.getUserId()).isEqualTo(loginUser.getUserId()); //결과 사용자 ID 확인
 
 
-       /* *//*미등록 로그인*//*
+        /* *//*미등록 로그인*//*
         UserAccReq02 loginReq1 = new UserAccReq02();
         loginReq1.setUserEm("skawns28@naver.com");
         loginReq1.setUserPw("1234");

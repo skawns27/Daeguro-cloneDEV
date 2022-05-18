@@ -1,8 +1,8 @@
-package com.daeguro.client.controller;
+package com.daeguro.user.controller;
 
-import com.daeguro.client.controller.userAcc.*;
-import com.daeguro.client.service.UserService;
-import com.daeguro.client.vo.UserVo;
+import com.daeguro.user.controller.userAcc.*;
+import com.daeguro.user.service.UserService;
+import com.daeguro.user.vo.UserVO;
 import com.daeguro.lib.CodeType;
 import com.daeguro.lib.SessionConst;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -32,7 +31,7 @@ public class UserController {
     @ResponseBody
     public UserAccRes01 regUser(@RequestBody UserAccReq01 userAccReq01) {
 
-        UserVo userVo = new UserVo();
+        UserVO userVo = new UserVO();
         userVo.setUserName(userAccReq01.getUserName());
         userVo.setUserEm(userAccReq01.getUserEm());
         userVo.setUserPw(userAccReq01.getUserPw());

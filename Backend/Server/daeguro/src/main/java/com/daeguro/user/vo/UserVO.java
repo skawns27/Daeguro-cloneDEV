@@ -1,4 +1,4 @@
-package com.daeguro.client.vo;
+package com.daeguro.user.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "userTB")
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserVo {
+public class UserVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

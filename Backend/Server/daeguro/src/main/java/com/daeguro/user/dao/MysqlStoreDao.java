@@ -1,4 +1,4 @@
-package com.daeguro.client.dao;
+package com.daeguro.user.dao;
 
 import javax.persistence.EntityManager;
 

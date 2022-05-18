@@ -1,7 +1,7 @@
-package com.daeguro.client.web;
+package com.daeguro.user.web;
 
-import com.daeguro.client.web.filter.LogFilter;
-import com.daeguro.client.web.filter.LoginCheckFilter;
+import com.daeguro.user.web.filter.LogFilter;
+import com.daeguro.user.web.filter.LoginCheckFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;

@@ -1,11 +1,11 @@
 package com.daeguro.lib;
 
  public interface CodeType {
-     char OK = '0';
-     char unKnownErr = '1';
-     char dupUser = '2';
-     char wrongPw = '3';
-     char unValidReq = '4';
-     char noUserData = '5';
-     char DupLogin = '6';
+     String OK = "00";
+     String unKnownErr = "01" ;
+     String dupUser = "02";
+     String wrongPw = "03";
+     String unValidReq = "04";
+     String noUserData = "05";
+     String DupLogin = "06";
  }

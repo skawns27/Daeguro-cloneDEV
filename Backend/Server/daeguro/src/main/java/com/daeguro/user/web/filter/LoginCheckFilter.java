@@ -1,4 +1,4 @@
-package com.daeguro.client.web.filter;
+package com.daeguro.user.web.filter;
 
 import com.daeguro.lib.SessionConst;
 import lombok.extern.slf4j.Slf4j;
