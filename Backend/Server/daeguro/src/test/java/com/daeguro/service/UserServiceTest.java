@@ -1,8 +1,4 @@
 package com.daeguro.service;
-
-import com.daeguro.user.controller.userAcc.UserAccReq02;
-import com.daeguro.user.controller.userAcc.UserAccRes01;
-import com.daeguro.user.controller.userAcc.UserAccRes02;
 import com.daeguro.user.service.UserService;
 import com.daeguro.user.vo.UserVO;
 import com.daeguro.lib.CodeType;
@@ -16,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 
 
 @SpringBootTest
@@ -42,9 +39,9 @@ public class UserServiceTest {
                 'M',
                 "대구광역시 수성구 신매로51 229동 509호");
 
-        UserAccRes01 res = userService.userAcc01(newUser);
-        assertThat(res.getResCode()).isEqualTo(CodeType.OK);
-        assertThat(res.getUserId()).isEqualTo(newUser.getUserId());
+        HashMap<String, Object> res = userService.userAcc01(newUser);
+        assertThat(res.get("resCode")).isEqualTo(CodeType.OK);
+        assertThat(res.get("userId")).isEqualTo(newUser.getUserId());
 
         /*중복회원가입*/
 
@@ -58,22 +55,22 @@ public class UserServiceTest {
                 'M',
                 "대구광역시 수성구 신매로51 229동 509호");
 
-        UserAccRes01 res2 = userService.userAcc01(newUser);
-        assertThat(res2.getResCode()).isEqualTo(CodeType.dupUser);
+        HashMap<String, Object> res2 = userService.userAcc01(newUser);
+        assertThat(res2.get("resCode")).isEqualTo(CodeType.dupUser);
     }
 
     @Test
     @Transactional
     @Rollback
     void 로그인_정보_업데이트() {
-        UserVO loginUser = new UserVO();
-        loginUser.setUserEm("skawns27@naver.com");
-        loginUser.setUserPw("1234");
+        UserVO loginUserVO = new UserVO();
+        loginUserVO.setUserEm("skawns27@naver.com");
+        loginUserVO.setUserPw("1234");
 
         /*로그인*/
-        UserAccRes02 res = userService.userAcc02("skawns27@naver.com", "1234", "00");
-        assertThat(res.getResMsg()).isEqualTo(MsgType.OK); //결과코드 확인
-        assertThat(res.getUserId()).isEqualTo(loginUser.getUserId()); //결과 사용자 ID 확인
+        HashMap<String, Object> res = userService.userAcc02(loginUserVO);
+        assertThat(res.get("resCode")).isEqualTo(MsgType.OK); //결과코드 확인
+        assertThat(res.get("resMsg")).isEqualTo(loginUserVO.getUserId()); //결과 사용자 ID 확인
 
 
         /* *//*미등록 로그인*//*

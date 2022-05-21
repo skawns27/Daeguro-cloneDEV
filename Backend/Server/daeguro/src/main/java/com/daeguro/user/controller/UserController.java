@@ -1,6 +1,5 @@
 package com.daeguro.user.controller;
 
-import com.daeguro.user.controller.userAcc.*;
 import com.daeguro.user.service.UserService;
 import com.daeguro.user.vo.UserVO;
 import com.daeguro.lib.CodeType;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 
 @Slf4j
 @Controller
@@ -26,48 +26,56 @@ public class UserController {
         this.userService = userService;
     }
 
+
     /*사용자 회원가입 요청*/
     @PostMapping("/users/new")
     @ResponseBody
-    public UserAccRes01 regUser(@RequestBody UserAccReq01 userAccReq01) {
+    public HashMap<String, Object> regUser(@RequestBody UserVO reqLoginUser) {
 
-        UserVO userVo = new UserVO();
-        userVo.setUserName(userAccReq01.getUserName());
-        userVo.setUserEm(userAccReq01.getUserEm());
-        userVo.setUserPw(userAccReq01.getUserPw());
-        userVo.setUserTel(userAccReq01.getUserTel());
-        userVo.setUserBirth(userAccReq01.getUserBirth());
-        userVo.setUserGender(userAccReq01.getUserGender());
-        userVo.setUserAddr(userAccReq01.getUserAddr());
+        UserVO userVO = new UserVO();
+        userVO.setUserName(reqLoginUser.getUserName());
+        userVO.setUserEm(reqLoginUser.getUserEm());
+        userVO.setUserPw(reqLoginUser.getUserPw());
+        userVO.setUserTel(reqLoginUser.getUserTel());
+        userVO.setUserBirth(reqLoginUser.getUserBirth());
+        userVO.setUserGender(reqLoginUser.getUserGender());
+        userVO.setUserAddr(reqLoginUser.getUserAddr());
 
-        UserAccRes01 res = userService.userAcc01(userVo);
+        HashMap<String, Object> res = userService.userAcc01(userVO);
         return res; // =>회원가입 서비스 결과(resCode, resMsg) 리턴
     }
     /*사용자 로그인 요청*/
     @PostMapping("/user/login")
     @ResponseBody
-    public UserAccRes02 loginUser(@RequestBody UserAccReq02 userAccReq02,
+    public HashMap<String, Object> loginUser(@RequestBody UserVO userVO,
                                   @RequestParam(defaultValue = "/user/login") String redirectURL,
                                   HttpServletRequest httpReq,
                                   HttpServletResponse httpRes) {
         /*세션유무 확인*/
-        String loginState = SessionConst.NORMAL_LOGIN;
+        userVO.setUserState(SessionConst.NORMAL_LOGIN);
         HttpSession session = httpReq.getSession(false); //중복 로그인 확인
 
-        if (session== null || session.getAttribute(SessionConst.LOGIN_USER) == null) {
+        if (session == null || session.getAttribute(SessionConst.LOGIN_USER) == null) {
             session = httpReq.getSession(); // 세션 생성
             log.info("로그인 => 새로운 세션생성");
         } else {
             log.info("중복 로그인 => 세션 초기화");
             session.invalidate(); // 세션 초기화
             session = httpReq.getSession(); //새 세션할당
-            loginState = SessionConst.DUP_LOGIN;
+            userVO.setUserState(SessionConst.DUP_LOGIN);
         }
         /*사용자 정보 조회*/
-        UserAccRes02 res = userService.userAcc02(userAccReq02.getUserEm(), userAccReq02.getUserPw(), loginState);
-        Long loginUser = res.getUserId();
-        session.setAttribute(SessionConst.LOGIN_USER, loginUser);//사용자 id 속성 추가
+        // 세션ID 인증 코드 추가예정
+        /*if (userId != sessionUserId) {
+            res.setResCode(CodeType.unValidReq);
+            res.setResMsg(MsgType.unValidReq);
 
+            return res;
+        }*/
+        HashMap<String, Object> res = userService.userAcc02(userVO);
+        session.setAttribute(SessionConst.LOGIN_USER, userVO.getUserId());//사용자 id 속성 추가
+
+        //redirect 기능 추가예정
        /* try {
             httpRes.sendRedirect("/");
         } catch (IOException e) {
@@ -79,11 +87,11 @@ public class UserController {
     /*사용자 로그아웃*/
     @PostMapping("/user/logout")
     @ResponseBody
-    public UserAccRes03 logoutUser(HttpServletRequest httpReq,
+    public HashMap<String, Object> logoutUser(HttpServletRequest httpReq,
                                    HttpServletResponse httpRes) {
 
+        HashMap<String, Object> res;
         HttpSession session = httpReq.getSession(false);
-
         if (session.getAttribute(SessionConst.LOGIN_USER) != null) {
             session.invalidate();
         }
@@ -93,13 +101,13 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-       return userService.userAcc03();
+        res = userService.userAcc03();
+       return res;
     }
     /*사용자정보 조회*/
     @GetMapping("/user/my")
     @ResponseBody
-    public UserAccRes04 findUser(HttpServletRequest httpReq) {
+    public HashMap<String, Object> findUser(HttpServletRequest httpReq) {
 
         HttpSession session = httpReq.getSession(false);
         Long sessionUserId = Long.parseLong(session.getAttribute(SessionConst.LOGIN_USER).toString());
@@ -110,23 +118,23 @@ public class UserController {
     /*사용자정보 프로필정보 수정*/
     @ResponseBody
     @PostMapping("user/my/{userId}/update")
-    public UserAccRes05 updateUser(@PathVariable String userId,
-                                   @RequestBody UserAccReq05 updateUserData,
+    public HashMap<String, Object> updateUser(@PathVariable String userId,
+                                   @RequestBody UserVO userVO,
                                    HttpServletRequest httpReq,
                                    HttpServletResponse httpRes) {
 
-        UserAccRes05 res;
+        HashMap<String, Object> res;
         HttpSession session = httpReq.getSession(false);
         Long sessionUserId = Long.parseLong(session.getAttribute(SessionConst.LOGIN_USER).toString());
         log.info("sessionUserId = {}", sessionUserId);
-        res = userService.userAcc05(Long.parseLong(userId), sessionUserId, updateUserData);
+        res = userService.userAcc05(userVO);
 
-        if(res.getResCode() == CodeType.OK) {
+        if(res.get("resCode") == CodeType.OK) {
             /*세션 초기화*/
             session.invalidate();
             httpReq.getSession();
         }
-
+        //내 정보 화면으로 redirect
         try {
             httpRes.sendRedirect("user/my");
         } catch (IOException e) {

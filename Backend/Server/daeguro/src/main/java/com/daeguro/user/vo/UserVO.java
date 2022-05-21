@@ -30,5 +30,8 @@ public class UserVO {
     private char userGender;
     @Column(name ="useraddr")
     private String userAddr;
+    private String userState ="";
 
+    public UserVO(Object o, String userName, String s, String pw, String s1, String s2, char m, String s3) {
+    }
 }
